@@ -1,25 +1,36 @@
 from abc import ABC, abstractmethod
 from behaviors import Behavior
-from game_types import GameStateProtocol
+from game_protocols import GameStateProtocol, PlayerProtocol
 
 class Item(ABC):
     def __init__(self, name, tags):
         self.name = name
         self.tags = tags
         self.triggers: list[callable[[], None]] = []
+        self._owner: PlayerProtocol | None = None
 
     def trigger(self):
         # default implementation does nothing, aka no trigger
         pass
 
     def __str__(self):
+        str = ""
         for variable in vars(self):
-            print(f"{variable}: {getattr(self, variable)}")
+            str += f"{variable}: {getattr(self, variable)}\n"
+        return str
 
     def add_behavior(self, behavior_class: type[Behavior], game_state: GameStateProtocol, item_config: dict):
         '''adds the actual actionable behavior to the item'''
-        behavior = behavior_class(game_state=game_state, item_config=item_config)
+        behavior = behavior_class(game_state=game_state, item_config=item_config, parent_item=self)
         self._behaviors.append(behavior)
+
+    @property
+    def owner(self) -> PlayerProtocol | None:
+        return self._owner
+
+    @owner.setter
+    def owner(self, value: PlayerProtocol):
+        self._owner = value
 
 class ActivatableItem(Item):
     def __init__(self, name, tags, cooldown_ms):
@@ -83,7 +94,7 @@ class ActivatableItem(Item):
         for behavior in self._behaviors:
             behavior.execute()
 
-    def charge_ms(self, time_ms):
+    def add_charge_ms(self, time_ms):
         self.charge_ms += time_ms
 
     def tick(self, delta_time_ms):

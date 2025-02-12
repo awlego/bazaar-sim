@@ -12,7 +12,7 @@ if __name__ == "__main__":
         "name": "Health Potion",
         "tags": ["healing"],
         "cooldown_ms": 3000,
-        "heal": 50
+        "heal": 10
     }
     health_potion = item_factory.create(item_config)
 
@@ -20,15 +20,15 @@ if __name__ == "__main__":
         "name": "Rusty Sword",
         "tags": ["weapon"],
         "cooldown_ms": 4000,
-        "damage": 10
+        "damage": 50
     }
     rusty_sword = item_factory.create(item_config2)
    
 
     p1 = Player(health=100, max_health=100, shield=0, burn=0, poison=0, board=Board())
     p2 = Player(health=100, max_health=100, shield=0, burn=0, poison=0, board=Board())
-    p1.board.items.append(rusty_sword)
-    p1.board.items.append(health_potion)
+    p1.board.add_item(rusty_sword)
+    p2.board.add_item(health_potion)
     game_state.players.append(p1)
     game_state.players.append(p2)
 

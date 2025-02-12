@@ -1,0 +1,13 @@
+
+
+
+
+GameState -> Player -> Board -> Item -> Behavior
+
+behavior sometimes needs:
+ * player info
+ * board info
+ * item info
+
+if I pass the game state to the behavior then I can access all that info
+if it is too expensive to find that info, I can optimize.

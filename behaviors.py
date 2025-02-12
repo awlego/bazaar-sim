@@ -1,12 +1,12 @@
-from game_types import GameStateProtocol
+from game_protocols import GameStateProtocol, ItemProtocol
 from abc import ABC, abstractmethod
 
 class Behavior(ABC):
-    def __init__(self, game_state: GameStateProtocol, item_config: dict):
-        print(game_state, item_config)
+    def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
         self.game_state = game_state
         self.config = item_config
-    
+        self.parent_item = parent_item
+
     @property
     def config(self) -> dict:
         return self._config
@@ -26,13 +26,14 @@ class Behavior(ABC):
     def execute(self):
         pass
 
+
 class DamageBehavior(Behavior):
-    def __init__(self, game_state: GameStateProtocol, item_config: dict):
-        super().__init__(game_state, item_config)
+    def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
+        super().__init__(game_state, item_config, parent_item)
         self._damage = item_config['damage']
     
     def execute(self):
-        opponent = self.game_state.get_opponent()
+        opponent = self.game_state.get_owners_opponent(self.parent_item)
         opponent.health = max(0, opponent.health - self._damage)
 
     def _validate_config(self):
@@ -40,13 +41,14 @@ class DamageBehavior(Behavior):
         if not self._config.get("damage"):
             raise ValueError("Damage behavior config must have a damage field")
 
+
 class HealBehavior(Behavior):
-    def __init__(self, game_state: GameStateProtocol, item_config: dict):
-        super().__init__(game_state, item_config)
+    def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
+        super().__init__(game_state, item_config, parent_item)
         self._heal = item_config['heal']
     
     def execute(self):
-        player = self.game_state.get_player()
+        player = self.game_state.get_owner(self.parent_item)
         player.health = min(player.max_health, player.health + self._heal)
 
     def _validate_config(self):

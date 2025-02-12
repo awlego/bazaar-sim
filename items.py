@@ -1,7 +1,7 @@
 from item import ActivatableItem, Item
 from behaviors import DamageBehavior, HealBehavior
 from typing import Optional, TypedDict
-from game_types import GameStateProtocol
+from game_protocols import GameStateProtocol
 
 class ItemConfig(TypedDict):
     name: str
