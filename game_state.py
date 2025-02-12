@@ -15,6 +15,7 @@ class GameState():
         for player in self.players:
             for item in player.board.items:
                 item.tick(delta_time_ms)
+        
             
     def start(self):
         while not self.game_over:
@@ -22,6 +23,8 @@ class GameState():
             if self.current_time_ms >= 30 * 1000:
                 self.game_over = True
             print(self)
+        print("Game over")
+        print(self)
 
     def get_player(self) -> Player:
         return self.players[0]
@@ -37,6 +40,9 @@ class GameState():
             return self.get_opponent()
         else:
             return self.get_player()
+        
+    def end_game(self):
+        self.game_over = True
     
     def __str__(self):
         string = ""

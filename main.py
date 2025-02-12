@@ -25,8 +25,8 @@ if __name__ == "__main__":
     rusty_sword = item_factory.create(item_config2)
    
 
-    p1 = Player(health=100, max_health=100, shield=0, burn=0, poison=0, board=Board())
-    p2 = Player(health=100, max_health=100, shield=0, burn=0, poison=0, board=Board())
+    p1 = Player(health=100, max_health=100, shield=0, burn=0, poison=0, board=Board(), game_state=game_state)
+    p2 = Player(health=100, max_health=100, shield=0, burn=0, poison=0, board=Board(), game_state=game_state)
     p1.board.add_item(rusty_sword)
     p2.board.add_item(health_potion)
     game_state.players.append(p1)

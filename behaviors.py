@@ -34,7 +34,7 @@ class DamageBehavior(Behavior):
     
     def execute(self):
         opponent = self.game_state.get_owners_opponent(self.parent_item)
-        opponent.health = max(0, opponent.health - self._damage)
+        opponent.health -= self._damage
 
     def _validate_config(self):
         super()._validate_config()
@@ -49,7 +49,7 @@ class HealBehavior(Behavior):
     
     def execute(self):
         player = self.game_state.get_owner(self.parent_item)
-        player.health = min(player.max_health, player.health + self._heal)
+        player.health += self._heal
 
     def _validate_config(self):
         super()._validate_config()
