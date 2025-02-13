@@ -25,6 +25,8 @@ class PlayerProtocol(Protocol):
     burn: int
     poison: int
     board: BoardProtocol
+    def take_damage(self, dmg: int) -> None:
+        ...
 
 class GameStateProtocol(Protocol):
     def get_player(self) -> PlayerProtocol:

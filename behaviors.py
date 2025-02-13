@@ -34,7 +34,7 @@ class DamageBehavior(Behavior):
     
     def execute(self):
         opponent = self.game_state.get_owners_opponent(self.parent_item)
-        opponent.health -= self._damage
+        opponent.take_damage(self._damage)
 
     def _validate_config(self):
         super()._validate_config()
