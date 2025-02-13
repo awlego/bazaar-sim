@@ -55,3 +55,45 @@ class HealBehavior(Behavior):
         super()._validate_config()
         if not self._config.get("heal"):
             raise ValueError("Heal behavior config must have a heal field")
+        
+class ShieldBehavior(Behavior):
+    def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
+        super().__init__(game_state, item_config, parent_item)
+        self._shield = item_config['shield']
+    
+    def execute(self):
+        player = self.game_state.get_owner(self.parent_item)
+        player.shield += self._shield
+
+    def _validate_config(self):
+        super()._validate_config()
+        if not self._config.get("shield"):
+            raise ValueError("Shield behavior config must have a shield field")
+        
+class BurnBehavior(Behavior):
+    def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
+        super().__init__(game_state, item_config, parent_item)
+        self._burn = item_config['burn']
+
+    def execute(self):
+        opponent = self.game_state.get_owners_opponent(self.parent_item)
+        opponent.burn += self._burn
+
+    def _validate_config(self):
+        super()._validate_config()
+        if not self._config.get("burn"):
+            raise ValueError("Burn behavior config must have a burn field")
+
+class PoisonBehavior(Behavior):
+    def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
+        super().__init__(game_state, item_config, parent_item)
+        self._poison = item_config['poison']
+
+    def execute(self):
+        opponent = self.game_state.get_owners_opponent(self.parent_item)
+        opponent.poison += self._poison
+
+    def _validate_config(self):
+        super()._validate_config()
+        if not self._config.get("poison"):
+            raise ValueError("Poison behavior config must have a poison field")

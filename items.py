@@ -1,5 +1,5 @@
 from item import ActivatableItem, Item
-from behaviors import DamageBehavior, HealBehavior
+from behaviors import DamageBehavior, HealBehavior, ShieldBehavior, BurnBehavior, PoisonBehavior
 from typing import Optional, TypedDict
 from game_protocols import GameStateProtocol
 
@@ -17,6 +17,9 @@ class ItemFactory:
         self.BEHAVIOR_MAPPING = {
             "damage": DamageBehavior,
             "heal": HealBehavior,
+            "shield": ShieldBehavior,
+            "burn": BurnBehavior,
+            "poison": PoisonBehavior,
         }
 
     def create(self, config: ItemConfig) -> Item:

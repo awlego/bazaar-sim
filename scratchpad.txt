@@ -11,3 +11,17 @@ behavior sometimes needs:
 
 if I pass the game state to the behavior then I can access all that info
 if it is too expensive to find that info, I can optimize.
+
+
+
+
+Goals:
+
+take in a dictionary of your items/skills/backpack and your opponent's board /
+skills and then make a positioning solver.
+
+extra's:
+
+simulator that can explain what your best config is and how much total 
+damage you can do by a certain timestamp. 
+i.e. how much damage can you be 6 sec? 12 sec? 30 sec?
