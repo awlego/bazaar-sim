@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Behavior(ABC):
     def __init__(self, game_state: GameStateProtocol, item_config: dict, parent_item: ItemProtocol):
         self.game_state = game_state
-        self.config = item_config
+        self._config = item_config
         self.parent_item = parent_item
 
     @property
